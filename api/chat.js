@@ -97,6 +97,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
+    console.log('Request received, body keys:', Object.keys(req.body || {}));
     const { messages, system, model, max_tokens } = req.body;
 
     // Get the user's latest message for the search query
@@ -126,6 +127,7 @@ export default async function handler(req, res) {
     }
 
     // Step 4: Call Claude with enriched prompt
+    console.log('Calling Anthropic, system length:', enrichedSystem.length, 'messages:', messages.length);
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -144,6 +146,7 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     if (!response.ok) {
+      console.error('Anthropic API error:', response.status, JSON.stringify(data));
       return res.status(response.status).json(data);
     }
 
