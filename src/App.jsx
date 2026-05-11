@@ -913,7 +913,7 @@ export default function BulletproofMindsetWorkplace() {
     const newMessages = [...messages, { role: "user", content: input }];
     setMessages(newMessages); setInput(""); setIsTyping(true);
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -1394,7 +1394,7 @@ export default function BulletproofMindsetWorkplace() {
     const newMsgs = [...hrMessages, { role: "user", content: hrInput }];
     setHrMessages(newMsgs); setHrInput(""); setHrTyping(true);
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch("/api/chat", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1200, system: HR_AI_PROMPT, messages: newMsgs.map(m => ({ role: m.role, content: m.content })) }),
       });
